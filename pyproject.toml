@@ -1,0 +1,88 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "clinical-agent"
+version = "0.1.0"
+description = "Agentic clinical reasoning system with tool use, focused on sepsis."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "Apache-2.0" }
+authors = [{ name = "z-awan-lab" }]
+keywords = ["clinical-ai", "agents", "rag", "sepsis", "llm"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+dependencies = [
+    "numpy>=1.26",
+    "requests>=2.31",
+    "pydantic>=2.5",
+    "pyyaml>=6.0",
+    "tenacity>=8.2",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "pytest-cov>=4.1",
+    "pytest-mock>=3.12",
+    "ruff>=0.4",
+    "mypy>=1.8",
+    "types-requests",
+    "types-PyYAML",
+]
+# Heavy ML deps installed only when needed (Phase 2 onward).
+# Kept out of base install so CI stays fast and `pip install -e .` works on laptops.
+ml = [
+    "torch>=2.2",
+    "transformers>=4.40",
+    "sentence-transformers>=3.0",
+    "qdrant-client>=1.9",
+    "accelerate>=0.30",
+    "bitsandbytes>=0.43; sys_platform == 'linux'",
+]
+agent = [
+    "langgraph>=0.2",
+    "langchain-core>=0.3",
+]
+eval = [
+    "ragas>=0.2",
+    "datasets>=2.18",
+    "scikit-learn>=1.4",
+]
+app = [
+    "streamlit>=1.35",
+]
+
+[project.urls]
+Repository = "https://github.com/z-awan-lab/clinical-agent"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra --strict-markers"
+markers = [
+    "integration: tests that hit external services (skipped by default in CI)",
+    "slow: tests that take more than a few seconds",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["E501"]  # line length handled by formatter
+
+[tool.mypy]
+python_version = "3.11"
+strict = false
+ignore_missing_imports = true
+warn_unused_ignores = true

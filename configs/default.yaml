@@ -1,0 +1,36 @@
+# Default configuration for clinical-agent.
+#
+# Each major component reads its config from a section here. Pluggability is
+# achieved by setting `backend:` to the implementation key — concrete classes
+# register themselves in their respective package __init__.
+#
+# Phase 1: only `tools.pubmed_search` is wired up.
+
+tools:
+  pubmed_search:
+    # NCBI API key read from env var NCBI_API_KEY when unset here.
+    api_key: null
+    timeout: 30.0
+    default_max_results: 5
+
+embeddings:
+  backend: bge-large-en-v1.5  # placeholder; concrete impl lands in Phase 2
+
+vectorstore:
+  backend: qdrant  # placeholder; concrete impl lands in Phase 2
+  qdrant:
+    url: http://localhost:6333
+    collection: clinical_agent_sepsis
+
+generation:
+  backend: medgemma-1.5-27b-it  # placeholder; concrete impl lands in Phase 4
+  quantization: 4bit
+  max_new_tokens: 512
+  temperature: 0.0
+
+orchestrator:
+  max_steps: 8
+  step_budget_warn_at: 6
+
+logging:
+  level: INFO

@@ -1,0 +1,18 @@
+# docker-compose for clinical-agent
+#
+# Phase 1: app service only.
+# Phase 2: will add a Qdrant service and a shared network. Volumes will
+# persist the vector index between runs.
+
+services:
+  app:
+    build: .
+    image: clinical-agent:dev
+    container_name: clinical-agent-app
+    env_file:
+      - .env
+    volumes:
+      - ./data:/app/data
+      - ./eval_runs:/app/eval_runs
+    # Default command runs the test suite; override for interactive use.
+    command: pytest -v

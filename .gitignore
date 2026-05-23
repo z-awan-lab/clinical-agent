@@ -1,0 +1,68 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+pip-wheel-metadata/
+
+# Virtual envs
+.venv/
+venv/
+env/
+
+# Test / coverage
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+.tox/
+.mypy_cache/
+.ruff_cache/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Data — never commit corpora or indices
+data/
+!data/.gitkeep
+qdrant_storage/
+*.index
+*.faiss
+
+# Models — never commit weights
+models/
+*.safetensors
+*.bin
+*.gguf
+*.pt
+*.pth
+
+# Secrets / env
+.env
+.env.local
+*.key
+.secrets/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Notebooks
+.ipynb_checkpoints/
+
+# Logs
+*.log
+logs/
+
+# Eval artifacts (kept manually with results.md)
+eval_runs/
+!eval_runs/.gitkeep

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE eSearchResult PUBLIC "-//NLM//DTD esearch 20060628//EN" "https://eutils.ncbi.nlm.nih.gov/eutils/dtd/20060628/esearch.dtd">
+<eSearchResult>
+  <Count>1234</Count>
+  <RetMax>3</RetMax>
+  <RetStart>0</RetStart>
+  <IdList>
+    <Id>38000001</Id>
+    <Id>38000002</Id>
+    <Id>38000003</Id>
+  </IdList>
+  <TranslationSet/>
+  <QueryTranslation>sepsis[MeSH Terms]</QueryTranslation>
+</eSearchResult>

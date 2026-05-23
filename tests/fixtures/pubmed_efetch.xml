@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<PubmedArticleSet>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">38000001</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue>
+            <Volume>49</Volume>
+            <Issue>11</Issue>
+            <PubDate>
+              <Year>2023</Year>
+              <Month>Nov</Month>
+            </PubDate>
+          </JournalIssue>
+          <Title>Intensive care medicine</Title>
+        </Journal>
+        <ArticleTitle>Early identification of sepsis in the emergency department: a prospective cohort study.</ArticleTitle>
+        <Abstract>
+          <AbstractText Label="BACKGROUND">Early recognition of sepsis is critical for improving outcomes.</AbstractText>
+          <AbstractText Label="METHODS">We enrolled 1,200 adults presenting to the emergency department with suspected infection.</AbstractText>
+          <AbstractText Label="RESULTS">qSOFA score of 2 or higher had sensitivity of 0.61 and specificity of 0.81 for in-hospital mortality.</AbstractText>
+          <AbstractText Label="CONCLUSIONS">qSOFA is a useful but imperfect bedside screening tool.</AbstractText>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Smith</LastName>
+            <Initials>J</Initials>
+          </Author>
+          <Author ValidYN="Y">
+            <LastName>Johnson</LastName>
+            <Initials>AB</Initials>
+          </Author>
+        </AuthorList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D018805">Sepsis</DescriptorName>
+        </MeshHeading>
+        <MeshHeading>
+          <DescriptorName UI="D004636">Emergency Service, Hospital</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">38000001</ArticleId>
+        <ArticleId IdType="doi">10.1007/s00134-023-00001-x</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">38000002</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <JournalIssue>
+            <PubDate>
+              <Year>2024</Year>
+            </PubDate>
+          </JournalIssue>
+          <Title>Critical care</Title>
+        </Journal>
+        <ArticleTitle>Lactate clearance as a marker of resuscitation in septic shock.</ArticleTitle>
+        <Abstract>
+          <AbstractText>Lactate clearance correlates with mortality in patients with septic shock. This narrative review summarises the evidence and clinical implications.</AbstractText>
+        </Abstract>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <LastName>Khan</LastName>
+            <Initials>R</Initials>
+          </Author>
+        </AuthorList>
+      </Article>
+      <MeshHeadingList>
+        <MeshHeading>
+          <DescriptorName UI="D012772">Shock, Septic</DescriptorName>
+        </MeshHeading>
+      </MeshHeadingList>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">38000002</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+  <PubmedArticle>
+    <MedlineCitation Status="MEDLINE" Owner="NLM">
+      <PMID Version="1">38000003</PMID>
+      <Article PubModel="Print">
+        <Journal>
+          <Title>Lancet</Title>
+        </Journal>
+        <ArticleTitle>Surviving sepsis: a consensus statement.</ArticleTitle>
+        <AuthorList CompleteYN="Y">
+          <Author ValidYN="Y">
+            <CollectiveName>Surviving Sepsis Campaign Working Group</CollectiveName>
+          </Author>
+        </AuthorList>
+      </Article>
+    </MedlineCitation>
+    <PubmedData>
+      <ArticleIdList>
+        <ArticleId IdType="pubmed">38000003</ArticleId>
+      </ArticleIdList>
+    </PubmedData>
+  </PubmedArticle>
+</PubmedArticleSet>

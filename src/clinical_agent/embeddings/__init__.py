@@ -1,5 +1,6 @@
-"""Embedding backends. Concrete implementations land in Phase 2."""
+"""Embedding backends."""
 
 from .base import BaseEmbedder
+from .bge import BGEEmbedder
 
-__all__ = ["BaseEmbedder"]
+__all__ = ["BGEEmbedder", "BaseEmbedder"]

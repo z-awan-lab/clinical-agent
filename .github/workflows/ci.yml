@@ -31,6 +31,10 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -e ".[dev]"
+          # qdrant-client enables Phase 2 vector store tests in :memory:
+          # mode. We don't install the full [ml] extras (torch etc.) in
+          # CI — those tests are gated by CLINICAL_AGENT_ML_TESTS.
+          pip install "qdrant-client>=1.9"
 
       - name: Lint with ruff
         run: ruff check src tests

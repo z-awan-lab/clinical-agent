@@ -22,12 +22,12 @@ deployable behind a hospital firewall.
 
 ## Current state
 
-**Phase 1 of 6 complete.** Scaffolding + `pubmed_search` tool.
+**Phases 1 and 2 of 6 complete.** Scaffolding, ingestion + chunking, BGE embeddings, Qdrant vector store, and two of the three v1 tools.
 
 | Phase | Deliverable | Status |
 |-------|-------------|--------|
 | 1 | Scaffolding, CI, Docker, base classes, `pubmed_search` tool | ✅ |
-| 2 | `guideline_retrieval` tool (BGE-large + Qdrant + sepsis corpus) | ⏳ |
+| 2 | Ingestion + chunking, BGE embeddings, Qdrant, `guideline_retrieval` tool | ✅ |
 | 3 | `clinical_calculator` tool (qSOFA, SOFA, NEWS2, …) | ⏳ |
 | 4 | LangGraph orchestrator + MedGemma 1.5 27B-IT integration | ⏳ |
 | 5 | Full evaluation suite + `results.md` | ⏳ |
@@ -64,20 +64,31 @@ git clone git@github.com:z-awan-lab/clinical-agent.git
 cd clinical-agent
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
+pip install qdrant-client>=1.9   # enables the in-memory vector store tests
 
-# Run the test suite
+# Run the test suite (67 tests; ML and live tests are gated)
 pytest -v
 
-# Try the PubMed tool against the real API
+# Phase 1 — try the PubMed tool against the real API
 export NCBI_API_KEY="your-key-here"  # optional, gives 10 req/sec vs 3 req/sec
 python scripts/try_pubmed.py "sepsis[MeSH] AND mortality" --max-results 3
+
+# Phase 2 — build the example index end-to-end (in-memory mode)
+pip install -e ".[ml]"   # adds torch, transformers, sentence-transformers
+python scripts/build_index.py --in-memory
 ```
 
 ### Docker
 
 ```bash
-docker compose build
+# Start Qdrant
+docker compose up -d qdrant
+
+# Run tests in the container
 docker compose run --rm app pytest -v
+
+# Build the example index against the live Qdrant service
+docker compose run --rm app python scripts/build_index.py --qdrant-url http://qdrant:6333
 ```
 
 ---
@@ -86,15 +97,16 @@ docker compose run --rm app pytest -v
 
 ```
 src/clinical_agent/
-├── tools/          # BaseTool + pubmed_search (Phase 1) + ... (Phases 2-3)
-├── embeddings/     # BaseEmbedder (Phase 2)
-├── vectorstore/    # BaseVectorStore (Phase 2)
+├── ingestion/      # Chunk, EvidenceTier, SimpleTextIngester, recursive chunker
+├── tools/          # BaseTool + pubmed_search + guideline_retrieval
+├── embeddings/     # BaseEmbedder + BGE-large-en-v1.5 (lazy-loaded)
+├── vectorstore/    # BaseVectorStore + Qdrant adapter (server or in-memory)
 ├── generation/     # BaseGenerator (Phase 4)
 └── utils/          # logging helpers
 
-tests/              # unit + offline-mocked integration; live tests gated by env var
-scripts/            # try_pubmed.py and (later) build_index.py, run_eval.py
-configs/            # default.yaml; layered configs added as components land
+tests/              # 67 tests; ML and live tests gated by env vars
+scripts/            # try_pubmed.py, build_index.py
+configs/            # default.yaml
 ```
 
 ## Design decisions worth flagging

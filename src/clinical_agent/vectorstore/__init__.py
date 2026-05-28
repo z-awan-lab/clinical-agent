@@ -1,5 +1,6 @@
-"""Vector store backends. Qdrant adapter lands in Phase 2."""
+"""Vector store backends."""
 
 from .base import BaseVectorStore, VectorHit
+from .qdrant_store import QdrantStore
 
-__all__ = ["BaseVectorStore", "VectorHit"]
+__all__ = ["BaseVectorStore", "QdrantStore", "VectorHit"]

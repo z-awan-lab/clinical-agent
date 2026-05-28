@@ -37,10 +37,10 @@ jobs:
           pip install "qdrant-client>=1.9"
 
       - name: Lint with ruff
-        run: ruff check src tests
+        run: ruff check src tests scripts
 
       - name: Format check with ruff
-        run: ruff format --check src tests
+        run: ruff format --check src tests scripts
 
       - name: Run pytest
         run: pytest -v --cov=clinical_agent --cov-report=term-missing

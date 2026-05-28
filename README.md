@@ -22,13 +22,13 @@ deployable behind a hospital firewall.
 
 ## Current state
 
-**Phases 1 and 2 of 6 complete.** Scaffolding, ingestion + chunking, BGE embeddings, Qdrant vector store, and two of the three v1 tools.
+**Phases 1–3 of 6 complete.** Scaffolding, retrieval pipeline, and all three v1 tools (with two distractor calculators for tool-selection evaluation).
 
 | Phase | Deliverable | Status |
 |-------|-------------|--------|
 | 1 | Scaffolding, CI, Docker, base classes, `pubmed_search` tool | ✅ |
 | 2 | Ingestion + chunking, BGE embeddings, Qdrant, `guideline_retrieval` tool | ✅ |
-| 3 | `clinical_calculator` tool (qSOFA, SOFA, NEWS2, …) | ⏳ |
+| 3 | `clinical_calculator` tool (qSOFA, SOFA, Sepsis-3, + 2 distractors) | ✅ |
 | 4 | LangGraph orchestrator + MedGemma 1.5 27B-IT integration | ⏳ |
 | 5 | Full evaluation suite + `results.md` | ⏳ |
 | 6 | Streamlit two-pane demo + final polish | ⏳ |
@@ -52,7 +52,9 @@ Three tools, deliberately small for v1:
 - **`guideline_retrieval`** — RAG over NICE NG51, CDC, WHO, NIH sepsis content
   with evidence-tier metadata
 - **`clinical_calculator`** — deterministic scoring functions (qSOFA, SOFA,
-  NEWS2 plus distractors to evaluate tool-selection honesty)
+  Sepsis-3 criteria) plus distractors (CHA₂DS₂-VASc, Wells DVT) to evaluate
+  tool-selection honesty. Strict input handling: refuses and lists missing
+  inputs rather than assuming normal values. NEWS2 deferred to a follow-up.
 - **`pubmed_search`** — NCBI E-utilities for primary literature
 
 ---

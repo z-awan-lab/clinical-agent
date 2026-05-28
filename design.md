@@ -74,9 +74,14 @@ chunk ID.
 
 ### `clinical_calculator`
 Deterministic scoring functions, pure Python, exhaustively unit-tested.
-- Sepsis-relevant: qSOFA, SOFA, NEWS2, Sepsis-3 criteria check
+- Sepsis-relevant: qSOFA, SOFA, Sepsis-3 criteria check
 - Distractors (kept in tool set to evaluate tool-selection honesty):
   CHA2DS2-VASc, Wells DVT
+- **Strict input handling**: refuses to score and lists exactly which
+  required inputs are missing, rather than assuming missing values are
+  normal. Assume-normal can silently understate a sick patient.
+- **NEWS2 deferred** to a follow-up (the SpO2 Scale 2 / supplemental-O2
+  logic warrants its own focused implementation).
 
 ### `pubmed_search`
 NCBI E-utilities (eSearch + eFetch). Returns ranked abstracts with PMIDs,

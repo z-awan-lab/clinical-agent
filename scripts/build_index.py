@@ -14,7 +14,6 @@ from __future__ import annotations
 
 import argparse
 import sys
-from pathlib import Path
 
 import numpy as np
 
@@ -29,7 +28,6 @@ from clinical_agent.ingestion import (
 )
 from clinical_agent.utils import setup_logging
 from clinical_agent.vectorstore import QdrantStore
-
 
 # Tiny in-repo example corpus. Real ingesters will replace this in the
 # next session. Three documents, three distinct evidence tiers, so the
@@ -85,9 +83,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--collection", default="clinical_agent_sepsis", help="Qdrant collection name"
     )
-    parser.add_argument(
-        "--model", default="BAAI/bge-large-en-v1.5", help="embedding model"
-    )
+    parser.add_argument("--model", default="BAAI/bge-large-en-v1.5", help="embedding model")
     parser.add_argument(
         "--in-memory",
         action="store_true",

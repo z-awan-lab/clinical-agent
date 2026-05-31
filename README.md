@@ -22,14 +22,15 @@ deployable behind a hospital firewall.
 
 ## Current state
 
-**Phases 1–3 of 6 complete.** Scaffolding, retrieval pipeline, and all three v1 tools (with two distractor calculators for tool-selection evaluation).
+**Phases 1–4 of 6 complete.** All three tools shipped; LangGraph orchestrator with refusal, step budget, loop guard, and parse-retry-then-hard-fail. End-to-end agent runs locally with a scripted generator; real MedGemma integration lands in Phase 4.5 on the HPC.
 
 | Phase | Deliverable | Status |
 |-------|-------------|--------|
 | 1 | Scaffolding, CI, Docker, base classes, `pubmed_search` tool | ✅ |
 | 2 | Ingestion + chunking, BGE embeddings, Qdrant, `guideline_retrieval` tool | ✅ |
 | 3 | `clinical_calculator` tool (qSOFA, SOFA, Sepsis-3, + 2 distractors) | ✅ |
-| 4 | LangGraph orchestrator + MedGemma 1.5 27B-IT integration | ⏳ |
+| 4 | LangGraph orchestrator + tagged-block protocol + MedGemma wrapper | ✅ |
+| 4.5 | Real MedGemma trajectories on HPC, prompt iteration | ⏳ |
 | 5 | Full evaluation suite + `results.md` | ⏳ |
 | 6 | Streamlit two-pane demo + final polish | ⏳ |
 
@@ -100,14 +101,16 @@ docker compose run --rm app python scripts/build_index.py --qdrant-url http://qd
 ```
 src/clinical_agent/
 ├── ingestion/      # Chunk, EvidenceTier, SimpleTextIngester, recursive chunker
-├── tools/          # BaseTool + pubmed_search + guideline_retrieval
+├── tools/          # BaseTool + pubmed_search + guideline_retrieval + clinical_calculator
+├── calculators/    # qSOFA, SOFA, Sepsis-3, CHA2DS2-VASc, Wells DVT
 ├── embeddings/     # BaseEmbedder + BGE-large-en-v1.5 (lazy-loaded)
 ├── vectorstore/    # BaseVectorStore + Qdrant adapter (server or in-memory)
-├── generation/     # BaseGenerator (Phase 4)
+├── generation/     # BaseGenerator + MedGemma 27B (lazy-loaded, 4-bit)
+├── orchestrator/   # LangGraph state machine, tagged-block protocol, registry
 └── utils/          # logging helpers
 
-tests/              # 67 tests; ML and live tests gated by env vars
-scripts/            # try_pubmed.py, build_index.py
+tests/              # 177 tests; ML and live tests gated by env vars
+scripts/            # try_pubmed.py, build_index.py, try_calculator.py, try_agent.py
 configs/            # default.yaml
 ```
 

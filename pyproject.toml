@@ -47,7 +47,7 @@ ml = [
     "bitsandbytes>=0.43; sys_platform == 'linux'",
 ]
 agent = [
-    "langgraph>=0.2",
+    "langgraph>=1.0",
     "langchain-core>=0.3",
 ]
 eval = [

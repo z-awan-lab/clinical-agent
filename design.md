@@ -117,8 +117,11 @@ Every chunk carries:
 
 ## Models
 
-**Default reasoning agent: MedGemma 1.5 27B-IT, 4-bit quantised.** Strongest
-open medical model in 2026; Gemma family for continuity with Project 1.
+**Default reasoning agent: MedGemma 27B-text-IT, 4-bit quantised.** Strongest
+open medical text model available as of build time; Gemma family for
+continuity with Project 1. The 1.5 refresh shipped only 4B at time of
+writing, so the spec'd "MedGemma 1.5 27B-IT" was not yet available — the
+MedGemma 1 27B text-only variant is used instead.
 
 **Comparison reasoning agent: Qwen 2.5 72B-Instruct, 4-bit quantised.** Strong
 general-purpose tool use. Answers the implicit question: does medical
@@ -130,6 +133,41 @@ Both fit on a single H100 with 4-bit quantisation.
 from published benchmark numbers (e.g. Jiang et al. 2025 MedAgentBench
 evaluations of GPT-4o, Claude 3.5 Sonnet, Gemini 2.0 Pro, etc.) cited as
 external anchors.
+
+## Tool-call protocol (Phase 4 decision)
+
+Tagged-block format rather than JSON-as-whole-response — more tolerant
+of small-model formatting noise, allows interleaved `<thinking>` blocks
+that surface naturally in the trajectory pane:
+
+```
+<thinking> ... </thinking>     # zero or more, not executed
+<tool_call name="..."> {json} </tool_call>
+<final_answer> ... <citations>id1, id2</citations> </final_answer>
+<refuse reason="..."/>
+```
+
+The orchestrator acts on the **last** action-bearing block in a response
+(letting the model "think out loud" about a tool then change its mind).
+
+## Malformed output handling
+
+**One retry, then hard-fail to refusal.** If the model emits unparseable
+output, the orchestrator sends a short corrective prompt naming the
+specific parse failure and asks for one more attempt. A second failure
+terminates the run with `termination_reason="parse_failed_after_retry"`
+and a structured refusal — generous enough that occasional formatting
+hiccups don't kill the run, strict enough to surface genuine confusion.
+
+## Safety guards
+
+* **Step budget** (default 8). Exceeding terminates with refusal.
+* **Loop guard** — identical-args repeat of the most recent tool call
+  triggers refusal. Catches the common "model fixates on one tool"
+  failure mode without limiting legitimate same-tool-different-args
+  trajectories.
+* **Unknown tool** — fed back to the model as a tool result with a list
+  of available tools, not a hard error.
 
 ## Orchestration
 

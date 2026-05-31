@@ -1,5 +1,6 @@
-"""Generation backends. Concrete wrappers land in Phase 4."""
+"""Generation backends."""
 
 from .base import BaseGenerator, GenerationResult
+from .medgemma import MedGemmaGenerator
 
-__all__ = ["BaseGenerator", "GenerationResult"]
+__all__ = ["BaseGenerator", "GenerationResult", "MedGemmaGenerator"]
